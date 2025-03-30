@@ -31,7 +31,7 @@ interface UserResult {
   isFollowing: boolean;
 }
 
-interface TweetResult {
+interface PostResult {
   id: string;
   username: string;
   handle: string;
@@ -46,7 +46,7 @@ interface TweetResult {
 
 interface HashtagResult {
   tag: string;
-  tweetCount: number;
+  postCount: number;
 }
 
 const SearchResults = ({
@@ -89,7 +89,7 @@ const SearchResults = ({
     },
   ];
 
-  const mockTweets: TweetResult[] = [
+  const mockPosts: PostResult[] = [
     {
       id: "1",
       username: "Jane Smith",
@@ -133,10 +133,10 @@ const SearchResults = ({
   ];
 
   const mockHashtags: HashtagResult[] = [
-    { tag: "#ReactNative", tweetCount: 12453 },
-    { tag: "#UXDesign", tweetCount: 8765 },
-    { tag: "#MobileApp", tweetCount: 5432 },
-    { tag: "#ProductDesign", tweetCount: 3210 },
+    { tag: "#ReactNative", postCount: 12453 },
+    { tag: "#UXDesign", postCount: 8765 },
+    { tag: "#MobileApp", postCount: 5432 },
+    { tag: "#ProductDesign", postCount: 3210 },
   ];
 
   const renderUserItem = ({ item }: { item: UserResult }) => (
@@ -185,7 +185,7 @@ const SearchResults = ({
       <View>
         <Text className="font-bold">{item.tag}</Text>
         <Text className="text-gray-500">
-          {item.tweetCount.toLocaleString()} Tweets
+          {item.postCount.toLocaleString()} Posts
         </Text>
       </View>
     </TouchableOpacity>
@@ -227,7 +227,7 @@ const SearchResults = ({
       case "media":
         return (
           <FlatList
-            data={mockTweets}
+            data={mockPosts}
             renderItem={({ item }) => (
               <TweetCard {...item} onPress={() => onTweetPress(item.id)} />
             )}

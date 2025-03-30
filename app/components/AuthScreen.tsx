@@ -55,8 +55,8 @@ const AuthScreen = ({ onAuthenticated = () => {} }: AuthScreenProps) => {
               <Twitter size={48} color="#1DA1F2" />
               <Text className="text-2xl font-bold mt-4 text-gray-900">
                 {activeTab === "login"
-                  ? "Log in to Twitter"
-                  : "Join Twitter today"}
+                  ? "Log in to Social"
+                  : "Join Social today"}
               </Text>
             </View>
 
@@ -113,7 +113,7 @@ const AuthScreen = ({ onAuthenticated = () => {} }: AuthScreenProps) => {
             {/* Terms and Privacy */}
             <Text className="text-xs text-gray-500 text-center mt-8 px-4">
               By signing up, you agree to our Terms of Service and Privacy
-              Policy, including Cookie Use. Twitter may use your contact
+              Policy, including Cookie Use. Social may use your contact
               information, including your email address and phone number for
               purposes outlined in our Privacy Policy.
             </Text>

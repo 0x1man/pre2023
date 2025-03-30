@@ -23,7 +23,7 @@ interface ReplyListProps {
   onReply?: (replyId: string) => void;
   onShare?: (replyId: string) => void;
   isLoading?: boolean;
-  parentTweetId?: string;
+  parentPostId?: string;
 }
 
 const ReplyList = ({
@@ -72,7 +72,7 @@ const ReplyList = ({
   onReply = () => {},
   onShare = () => {},
   isLoading = false,
-  parentTweetId = "main",
+  parentPostId = "main",
 }: ReplyListProps) => {
   // Render loading state
   if (isLoading) {
@@ -97,11 +97,11 @@ const ReplyList = ({
           No replies yet
         </Text>
         <Text className="text-gray-500 text-center">
-          Be the first to reply to this tweet!
+          Be the first to reply to this post!
         </Text>
         <TouchableOpacity
           className="mt-4 bg-blue-500 py-2 px-6 rounded-full"
-          onPress={() => onReply(parentTweetId)}
+          onPress={() => onReply(parentPostId)}
         >
           <Text className="text-white font-medium">Reply</Text>
         </TouchableOpacity>

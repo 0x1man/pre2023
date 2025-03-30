@@ -11,8 +11,8 @@ import TweetCard from "./TweetCard";
 import ReplyList from "./ReplyList";
 
 interface TweetDetailScreenProps {
-  tweetId?: string;
-  tweet?: {
+  postId?: string;
+  post?: {
     id: string;
     username: string;
     handle: string;
@@ -33,13 +33,13 @@ interface TweetDetailScreenProps {
 }
 
 const TweetDetailScreen = ({
-  tweetId = "1",
-  tweet = {
+  postId = "1",
+  post = {
     id: "1",
     username: "John Doe",
     handle: "@johndoe",
     content:
-      "This is a sample tweet that has generated a lot of engagement. What do you think about this topic? #discussion #twitter",
+      "This is a sample post that has generated a lot of engagement. What do you think about this topic? #discussion #social",
     timestamp: "3h",
     likes: 142,
     retweets: 38,
@@ -60,7 +60,7 @@ const TweetDetailScreen = ({
   const handleSendReply = () => {
     if (replyText.trim()) {
       // In a real app, this would send the reply to the backend
-      console.log(`Replying to tweet ${tweetId}: ${replyText}`);
+      console.log(`Replying to post ${postId}: ${replyText}`);
       setReplyText("");
     }
   };
@@ -72,27 +72,27 @@ const TweetDetailScreen = ({
         <TouchableOpacity onPress={onBack} className="mr-4">
           <ArrowLeft size={20} color="#000" />
         </TouchableOpacity>
-        <Text className="text-lg font-bold">Tweet</Text>
+        <Text className="text-lg font-bold">Post</Text>
       </View>
 
       <ScrollView className="flex-1">
-        {/* Original Tweet */}
+        {/* Original Post */}
         <View className="border-b border-gray-200">
           <TweetCard
-            id={tweet.id}
-            username={tweet.username}
-            handle={tweet.handle}
-            content={tweet.content}
-            timestamp={tweet.timestamp}
-            likes={tweet.likes}
-            retweets={tweet.retweets}
-            replies={tweet.replies}
-            avatar={tweet.avatar}
-            image={tweet.image}
-            onLike={() => onLike(tweet.id)}
-            onRetweet={() => onRetweet(tweet.id)}
-            onReply={() => onReply(tweet.id)}
-            onShare={() => onShare(tweet.id)}
+            id={post.id}
+            username={post.username}
+            handle={post.handle}
+            content={post.content}
+            timestamp={post.timestamp}
+            likes={post.likes}
+            retweets={post.retweets}
+            replies={post.replies}
+            avatar={post.avatar}
+            image={post.image}
+            onLike={() => onLike(post.id)}
+            onRetweet={() => onRetweet(post.id)}
+            onReply={() => onReply(post.id)}
+            onShare={() => onShare(post.id)}
           />
         </View>
 
@@ -103,7 +103,7 @@ const TweetDetailScreen = ({
 
         {/* Replies */}
         <ReplyList
-          parentTweetId={tweet.id}
+          parentPostId={post.id}
           onReplyPress={onReplyToReply}
           onLike={onReplyToReply}
           onRetweet={onReplyToReply}
@@ -116,7 +116,7 @@ const TweetDetailScreen = ({
       <View className="p-3 border-t border-gray-200 flex-row items-center">
         <TextInput
           className="flex-1 bg-gray-100 rounded-full px-4 py-2 mr-2"
-          placeholder="Tweet your reply"
+          placeholder="Post your reply"
           value={replyText}
           onChangeText={setReplyText}
           multiline

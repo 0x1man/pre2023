@@ -26,9 +26,9 @@ import {
 interface ComposeTweetModalProps {
   visible?: boolean;
   onClose?: () => void;
-  onTweet?: (content: string, mediaUrl?: string) => void;
+  onPost?: (content: string, mediaUrl?: string) => void;
   editMode?: boolean;
-  tweetToEdit?: {
+  postToEdit?: {
     id: string;
     content: string;
     mediaUrl?: string;
@@ -53,16 +53,16 @@ const CONDITIONS = ["New", "Like New", "Good", "Fair", "Poor"];
 const ComposeTweetModal = ({
   visible = true,
   onClose = () => {},
-  onTweet = () => {},
+  onPost = () => {},
   editMode = false,
-  tweetToEdit = { id: "", content: "", mediaUrl: "" },
+  postToEdit = { id: "", content: "", mediaUrl: "" },
   isMarketListing = false,
 }: ComposeTweetModalProps) => {
-  const [tweetContent, setTweetContent] = useState(
-    editMode ? tweetToEdit.content : "",
+  const [postContent, setPostContent] = useState(
+    editMode ? postToEdit.content : "",
   );
   const [mediaUrl, setMediaUrl] = useState(
-    editMode && tweetToEdit.mediaUrl ? tweetToEdit.mediaUrl : "",
+    editMode && postToEdit.mediaUrl ? postToEdit.mediaUrl : "",
   );
   const maxCharCount = 280;
 
@@ -77,10 +77,10 @@ const ComposeTweetModal = ({
   const [showCategoryPicker, setShowCategoryPicker] = useState(false);
   const [showConditionPicker, setShowConditionPicker] = useState(false);
 
-  const handleTweet = () => {
-    if (tweetContent.trim() && tweetContent.length <= maxCharCount) {
-      onTweet(tweetContent, mediaUrl);
-      setTweetContent("");
+  const handlePost = () => {
+    if (postContent.trim() && postContent.length <= maxCharCount) {
+      onPost(postContent, mediaUrl);
+      setPostContent("");
       setMediaUrl("");
       onClose();
     }
@@ -124,14 +124,14 @@ const ComposeTweetModal = ({
     setMediaUrl("");
   };
 
-  const remainingChars = maxCharCount - tweetContent.length;
+  const remainingChars = maxCharCount - postContent.length;
   const isOverLimit = remainingChars < 0;
   const isNearLimit = remainingChars <= 20 && remainingChars >= 0;
 
   const isMarketFormValid =
     itemTitle.trim() &&
-    tweetContent.trim() &&
-    tweetContent.length <= maxCharCount &&
+    postContent.trim() &&
+    postContent.length <= maxCharCount &&
     itemLocation.trim();
 
   return (
@@ -152,24 +152,24 @@ const ComposeTweetModal = ({
               <X size={24} color="#1DA1F2" />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={isMarketListing ? handleListItem : handleTweet}
+              onPress={isMarketListing ? handleListItem : handlePost}
               disabled={
                 isMarketListing
                   ? !isMarketFormValid
-                  : tweetContent.length === 0 || isOverLimit
+                  : postContent.length === 0 || isOverLimit
               }
               className={`px-4 py-1.5 rounded-full ${
                 isMarketListing
                   ? isMarketFormValid
                     ? "bg-[#1DA1F2]"
                     : "bg-[#8ED0F9]"
-                  : tweetContent.length > 0 && !isOverLimit
+                  : postContent.length > 0 && !isOverLimit
                     ? "bg-[#1DA1F2]"
                     : "bg-[#8ED0F9]"
               }`}
             >
               <Text className="text-white font-bold">
-                {isMarketListing ? "List Item" : editMode ? "Update" : "Tweet"}
+                {isMarketListing ? "List Item" : editMode ? "Update" : "Post"}
               </Text>
             </TouchableOpacity>
           </View>
@@ -203,8 +203,8 @@ const ComposeTweetModal = ({
                       : "What's happening?"
                   }
                   multiline
-                  value={tweetContent}
-                  onChangeText={setTweetContent}
+                  value={postContent}
+                  onChangeText={setPostContent}
                   autoFocus
                 />
 
@@ -388,7 +388,7 @@ const ComposeTweetModal = ({
 
               {/* Character counter */}
               <View>
-                {tweetContent.length > 0 && (
+                {postContent.length > 0 && (
                   <Text
                     className={`${isOverLimit ? "text-red-500" : isNearLimit ? "text-yellow-500" : "text-gray-500"}`}
                   >

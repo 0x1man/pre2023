@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import TweetCard from "./TweetCard";
 
-interface Tweet {
+interface Post {
   id: string;
   username: string;
   handle: string;
@@ -22,22 +22,22 @@ interface Tweet {
 }
 
 interface TweetListProps {
-  tweets?: Tweet[];
+  posts?: Post[];
   isLoading?: boolean;
   isRefreshing?: boolean;
   onRefresh?: () => void;
   onLoadMore?: () => void;
-  onTweetPress?: (tweetId: string) => void;
-  onLike?: (tweetId: string) => void;
-  onDislike?: (tweetId: string) => void;
-  onRetweet?: (tweetId: string) => void;
-  onReply?: (tweetId: string) => void;
-  onEdit?: (tweetId: string) => void;
-  onShare?: (tweetId: string) => void;
+  onTweetPress?: (postId: string) => void;
+  onLike?: (postId: string) => void;
+  onDislike?: (postId: string) => void;
+  onRetweet?: (postId: string) => void;
+  onReply?: (postId: string) => void;
+  onEdit?: (postId: string) => void;
+  onShare?: (postId: string) => void;
 }
 
 const TweetList = ({
-  tweets = [
+  posts = [
     {
       id: "1",
       username: "Jane Smith",
@@ -142,12 +142,12 @@ const TweetList = ({
 
     return (
       <View className="flex-1 items-center justify-center py-10">
-        <Text className="text-gray-500 text-center">No tweets to display</Text>
+        <Text className="text-gray-500 text-center">No posts to display</Text>
       </View>
     );
   };
 
-  const renderTweet = ({ item }: { item: Tweet }) => (
+  const renderPost = ({ item }: { item: Post }) => (
     <TweetCard
       id={item.id}
       username={item.username}
@@ -174,8 +174,8 @@ const TweetList = ({
   return (
     <View className="flex-1 bg-white">
       <FlatList
-        data={tweets}
-        renderItem={renderTweet}
+        data={posts}
+        renderItem={renderPost}
         keyExtractor={(item) => item.id}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />

@@ -72,7 +72,7 @@ const SearchScreen = ({ initialQuery = "", onBack }: SearchScreenProps) => {
           <Search size={16} color="#536471" />
           <TextInput
             className="flex-1 ml-2 text-base"
-            placeholder="Search Twitter"
+            placeholder="Search Social"
             value={query}
             onChangeText={handleSearch}
             autoCapitalize="none"

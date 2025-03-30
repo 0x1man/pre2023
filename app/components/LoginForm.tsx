@@ -65,7 +65,7 @@ const LoginForm = ({
   return (
     <View className="w-full max-w-sm p-6 bg-white rounded-lg shadow-md">
       <Text className="text-2xl font-bold text-center mb-6 text-blue-500">
-        Log in to Twitter
+        Log in to Social
       </Text>
 
       <View className="mb-4">

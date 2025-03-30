@@ -38,8 +38,8 @@ const ProfileScreen = ({
 }: ProfileScreenProps) => {
   const navigation = useNavigation();
   const [activeTab, setActiveTab] = useState<
-    "tweets" | "replies" | "media" | "likes"
-  >("tweets");
+    "posts" | "replies" | "media" | "likes"
+  >("posts");
 
   const handleBackPress = () => {
     // In a real app, this would navigate back
@@ -51,17 +51,17 @@ const ProfileScreen = ({
     console.log("Follow button pressed");
   };
 
-  const handleTabChange = (tab: "tweets" | "replies" | "media" | "likes") => {
+  const handleTabChange = (tab: "posts" | "replies" | "media" | "likes") => {
     setActiveTab(tab);
   };
 
-  // Mock data for tweets, replies, media, and likes would be fetched from an API in a real app
-  const tweets = [
+  // Mock data for posts, replies, media, and likes would be fetched from an API in a real app
+  const posts = [
     {
       id: "1",
       username: displayName,
       handle: `@${username}`,
-      content: "Just setting up my Twitter clone!",
+      content: "Just setting up my Social clone!",
       timestamp: "2h",
       likes: 42,
       retweets: 12,
@@ -163,7 +163,7 @@ const ProfileScreen = ({
             userId={userId}
             activeTab={activeTab}
             onTabChange={handleTabChange}
-            tweets={tweets}
+            posts={posts}
             replies={replies}
             media={media}
             likes={likes}

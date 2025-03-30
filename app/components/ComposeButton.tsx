@@ -15,7 +15,7 @@ const ComposeButton = ({ onPress }: ComposeButtonProps) => {
       onPress();
     } else {
       // Default behavior - could be opening a modal or navigating
-      console.log("Compose tweet button pressed");
+      console.log("Compose post button pressed");
       // Example: router.push('/compose');
     }
   };

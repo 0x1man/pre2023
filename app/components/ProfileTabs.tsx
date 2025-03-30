@@ -12,11 +12,11 @@ import { MapPin, Tag, ShoppingBag } from "lucide-react-native";
 
 interface ProfileTabsProps {
   userId?: string;
-  activeTab?: "tweets" | "replies" | "media" | "likes" | "market";
+  activeTab?: "posts" | "replies" | "media" | "likes" | "market";
   onTabChange?: (
-    tab: "tweets" | "replies" | "media" | "likes" | "market",
+    tab: "posts" | "replies" | "media" | "likes" | "market",
   ) => void;
-  tweets?: Array<{
+  posts?: Array<{
     id: string;
     username: string;
     handle: string;
@@ -83,9 +83,9 @@ interface ProfileTabsProps {
 
 const ProfileTabs = ({
   userId = "1",
-  activeTab = "tweets",
+  activeTab = "posts",
   onTabChange = () => {},
-  tweets = [
+  posts = [
     {
       id: "1",
       username: "John Doe",
@@ -200,11 +200,11 @@ const ProfileTabs = ({
   ],
 }: ProfileTabsProps) => {
   const [localActiveTab, setLocalActiveTab] = useState<
-    "tweets" | "replies" | "media" | "likes" | "market"
+    "posts" | "replies" | "media" | "likes" | "market"
   >(activeTab);
 
   const handleTabChange = (
-    tab: "tweets" | "replies" | "media" | "likes" | "market",
+    tab: "posts" | "replies" | "media" | "likes" | "market",
   ) => {
     setLocalActiveTab(tab);
     onTabChange(tab);
@@ -271,8 +271,8 @@ const ProfileTabs = ({
     let contentToRender;
 
     switch (localActiveTab) {
-      case "tweets":
-        contentToRender = tweets;
+      case "posts":
+        contentToRender = posts;
         break;
       case "replies":
         contentToRender = replies;
@@ -307,10 +307,10 @@ const ProfileTabs = ({
       return (
         <View className="flex-1 items-center justify-center p-8 bg-white">
           <Text className="text-gray-500 text-center">
-            {localActiveTab === "tweets" && "No tweets yet"}
+            {localActiveTab === "posts" && "No posts yet"}
             {localActiveTab === "replies" && "No replies yet"}
-            {localActiveTab === "media" && "No media tweets yet"}
-            {localActiveTab === "likes" && "No liked tweets yet"}
+            {localActiveTab === "media" && "No media posts yet"}
+            {localActiveTab === "likes" && "No liked posts yet"}
           </Text>
         </View>
       );
@@ -345,13 +345,13 @@ const ProfileTabs = ({
       {/* Tabs */}
       <View className="flex-row border-b border-gray-200">
         <TouchableOpacity
-          onPress={() => handleTabChange("tweets")}
-          className={`flex-1 py-3 items-center ${localActiveTab === "tweets" ? "border-b-2 border-blue-500" : ""}`}
+          onPress={() => handleTabChange("posts")}
+          className={`flex-1 py-3 items-center ${localActiveTab === "posts" ? "border-b-2 border-blue-500" : ""}`}
         >
           <Text
-            className={`${localActiveTab === "tweets" ? "text-blue-500 font-bold" : "text-gray-600"}`}
+            className={`${localActiveTab === "posts" ? "text-blue-500 font-bold" : "text-gray-600"}`}
           >
-            Tweets
+            Posts
           </Text>
         </TouchableOpacity>
 
