@@ -65,21 +65,18 @@ if (!fs.existsSync(routerDtsPath)) {
   );
 }
 
-// Clear Metro bundler cache without starting the server
-console.log("Clearing Metro bundler cache...");
+// Clear watchman watches
 try {
-  execSync(
-    "npx expo start --clear --no-dev-client --non-interactive --max-workers=1 --max-old-space-size=1024",
-    {
-      stdio: "inherit",
-      timeout: 5000, // Reduced timeout to 5 seconds
-    },
-  );
+  console.log("Clearing watchman watches...");
+  execSync("watchman watch-del-all", { stdio: "pipe" });
+  console.log("Watchman watches cleared.");
 } catch (error) {
-  console.log("Finished clearing cache.");
+  console.log(
+    "Note: Could not clear watchman watches. This is normal if watchman is not installed.",
+  );
 }
 
-// Add ulimit command to increase file descriptor limit
+// Increase file descriptor limit
 try {
   console.log("Attempting to increase file descriptor limit...");
   execSync("ulimit -n 10240", { stdio: "pipe" });
@@ -88,6 +85,20 @@ try {
   console.log(
     "Note: Could not increase file descriptor limit. This is normal in some environments.",
   );
+}
+
+// Clear Metro bundler cache without starting the server
+console.log("Clearing Metro bundler cache...");
+try {
+  execSync(
+    "npx expo start --clear --no-dev-client --non-interactive --max-workers=1 --max-old-space-size=512",
+    {
+      stdio: "inherit",
+      timeout: 3000, // Reduced timeout to 3 seconds
+    },
+  );
+} catch (error) {
+  console.log("Finished clearing cache.");
 }
 
 // Increase file watch limit for Linux systems
