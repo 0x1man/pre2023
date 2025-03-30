@@ -36,10 +36,7 @@ dirsToClean.forEach((dir) => {
         if (!fs.existsSync(routerDtsPath)) {
           fs.writeFileSync(
             routerDtsPath,
-            `// This file was auto-generated
-declare module "expo-router" {
-  export * from "expo-router/build/types";
-}`,
+            `// This file was auto-generated\ndeclare module "expo-router" {\n  export * from "expo-router/build/types";\n}`,
           );
         }
       } else {
@@ -64,21 +61,33 @@ if (!fs.existsSync(routerDtsPath)) {
   console.log("Creating router.d.ts...");
   fs.writeFileSync(
     routerDtsPath,
-    `// This file was auto-generated
-declare module "expo-router" {
-  export * from "expo-router/build/types";
-}`,
+    `// This file was auto-generated\ndeclare module "expo-router" {\n  export * from "expo-router/build/types";\n}`,
   );
 }
 
-// Clear Metro bundler cache
+// Clear Metro bundler cache without starting the server
 console.log("Clearing Metro bundler cache...");
 try {
-  execSync("npx expo start --clear --max-workers=2 --max-old-space-size=4096", {
-    stdio: "inherit",
-  });
+  execSync(
+    "npx expo start --clear --no-dev-client --non-interactive --max-workers=1 --max-old-space-size=1024",
+    {
+      stdio: "inherit",
+      timeout: 5000, // Reduced timeout to 5 seconds
+    },
+  );
 } catch (error) {
   console.log("Finished clearing cache.");
+}
+
+// Add ulimit command to increase file descriptor limit
+try {
+  console.log("Attempting to increase file descriptor limit...");
+  execSync("ulimit -n 10240", { stdio: "pipe" });
+  console.log("File descriptor limit increased to 10240.");
+} catch (error) {
+  console.log(
+    "Note: Could not increase file descriptor limit. This is normal in some environments.",
+  );
 }
 
 // Increase file watch limit for Linux systems

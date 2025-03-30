@@ -1,9 +1,1 @@
-{
-  "ignore_dirs": [
-    ".git",
-    "node_modules",
-    ".expo"
-  ],
-  "fsevents_latency": 0.05,
-  "fsevents_try_resync": true
-}
+{"ignore_dirs":[".git","node_modules",".expo","tempobook","app/tempobook",".next","dist","build","coverage"],"fsevents_latency":0.05,"settle":500,"root_files":["package.json","app.json"],"watch_rate_ms":1000,"defer_recrawl":true,"enforce_root_files":true,"hint_num_files_per_dir":100,"idle_reap_age_seconds":60,"gc_age_seconds":300,"gc_interval_seconds":60,"use_fs_events":false,"use_watchman_polling":true,"polling_interval_ms":1000}
