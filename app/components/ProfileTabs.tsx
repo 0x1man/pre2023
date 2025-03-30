@@ -5,8 +5,10 @@ import {
   TouchableOpacity,
   ScrollView,
   FlatList,
+  Image,
 } from "react-native";
 import TweetCard from "./TweetCard";
+import { MapPin, Tag, ShoppingBag } from "lucide-react-native";
 
 interface ProfileTabsProps {
   userId?: string;
@@ -61,6 +63,21 @@ interface ProfileTabsProps {
     replies: number;
     avatar: string;
     image?: string;
+  }>;
+  marketItems?: Array<{
+    id: string;
+    title: string;
+    price: string | null;
+    bargaining: boolean;
+    description: string;
+    location: string;
+    category: string;
+    condition: string;
+    isNew: boolean;
+    timestamp: string;
+    image: string;
+    reserved: boolean;
+    reservedUntil?: string;
   }>;
 }
 
@@ -148,6 +165,39 @@ const ProfileTabs = ({
       avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=jane",
     },
   ],
+  marketItems = [
+    {
+      id: "m1",
+      title: "Vintage Camera",
+      price: "$120",
+      bargaining: false,
+      description:
+        "Vintage film camera in excellent condition. Perfect for collectors.",
+      location: "New York, NY",
+      category: "Electronics",
+      condition: "Good",
+      isNew: false,
+      timestamp: "2h",
+      image:
+        "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&q=80",
+      reserved: false,
+    },
+    {
+      id: "m2",
+      title: "Mechanical Keyboard",
+      price: "$85",
+      bargaining: true,
+      description: "Mechanical keyboard with RGB lighting and custom keycaps.",
+      location: "San Francisco, CA",
+      category: "Electronics",
+      condition: "Like New",
+      isNew: false,
+      timestamp: "5h",
+      image:
+        "https://images.unsplash.com/photo-1595044426077-d36d9236d54a?w=600&q=80",
+      reserved: false,
+    },
+  ],
 }: ProfileTabsProps) => {
   const [localActiveTab, setLocalActiveTab] = useState<
     "tweets" | "replies" | "media" | "likes" | "market"
@@ -159,6 +209,63 @@ const ProfileTabs = ({
     setLocalActiveTab(tab);
     onTabChange(tab);
   };
+
+  const renderMarketItem = ({
+    item,
+  }: {
+    item: ProfileTabsProps["marketItems"][0];
+  }) => (
+    <View className="bg-white mb-3 rounded-lg overflow-hidden shadow-sm border border-gray-200">
+      <View className="relative">
+        <Image
+          source={{ uri: item.image }}
+          className="w-full h-40"
+          resizeMode="cover"
+        />
+        {item.reserved && (
+          <View className="absolute top-2 right-2 bg-yellow-500 px-2 py-1 rounded-md">
+            <Text className="text-white font-bold text-xs">Reserved</Text>
+          </View>
+        )}
+        {item.isNew && (
+          <View className="absolute top-2 left-2 bg-green-500 px-2 py-1 rounded-md">
+            <Text className="text-white font-bold text-xs">New</Text>
+          </View>
+        )}
+      </View>
+
+      <View className="p-3">
+        <View className="flex-row justify-between items-center mb-1">
+          <Text className="text-lg font-bold">{item.title}</Text>
+          {item.price ? (
+            <Text className="text-blue-500 font-bold">{item.price}</Text>
+          ) : (
+            <Text className="text-green-500 font-bold">Make an offer</Text>
+          )}
+        </View>
+
+        <Text className="text-gray-500 mb-1">{item.timestamp}</Text>
+        <Text className="text-gray-700 mb-2">{item.description}</Text>
+
+        <View className="flex-row flex-wrap mb-2">
+          <View className="flex-row items-center bg-gray-100 rounded-full px-2 py-1 mr-2 mb-1">
+            <MapPin size={12} color="#4B5563" />
+            <Text className="text-xs text-gray-600 ml-1">{item.location}</Text>
+          </View>
+
+          <View className="flex-row items-center bg-gray-100 rounded-full px-2 py-1 mr-2 mb-1">
+            <Tag size={12} color="#4B5563" />
+            <Text className="text-xs text-gray-600 ml-1">{item.category}</Text>
+          </View>
+
+          <View className="flex-row items-center bg-gray-100 rounded-full px-2 py-1 mb-1">
+            <ShoppingBag size={12} color="#4B5563" />
+            <Text className="text-xs text-gray-600 ml-1">{item.condition}</Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
 
   const renderContent = () => {
     let contentToRender;
@@ -177,8 +284,21 @@ const ProfileTabs = ({
         contentToRender = likes;
         break;
       case "market":
-        contentToRender = []; // Empty for now, would be populated with market items
-        break;
+        return (
+          <FlatList
+            data={marketItems}
+            keyExtractor={(item) => item.id}
+            renderItem={renderMarketItem}
+            className="bg-white p-3"
+            ListEmptyComponent={
+              <View className="flex-1 items-center justify-center p-8 bg-white">
+                <Text className="text-gray-500 text-center">
+                  No market items yet
+                </Text>
+              </View>
+            }
+          />
+        );
       default:
         contentToRender = tweets;
     }
@@ -191,7 +311,6 @@ const ProfileTabs = ({
             {localActiveTab === "replies" && "No replies yet"}
             {localActiveTab === "media" && "No media tweets yet"}
             {localActiveTab === "likes" && "No liked tweets yet"}
-            {localActiveTab === "market" && "No market items yet"}
           </Text>
         </View>
       );
